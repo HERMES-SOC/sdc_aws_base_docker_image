@@ -21,5 +21,5 @@ with pathlib.Path("/requirements.txt").open() as requirements_txt:
             print(package_name + " is not installed")
             INSTALLED_FLAG = False
 
-    STATUS = "SUCCESS: All Packages Installed" if INSTALLED_FLAG else "FAILED: Missing Package(s)"
-    print(STATUS)
+    # STATUS = "SUCCESS: All Packages Installed" if INSTALLED_FLAG else "FAILED: Missing Package(s)"
+    # print(STATUS)
