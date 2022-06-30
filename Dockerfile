@@ -16,4 +16,3 @@ COPY requirements.txt  .
 COPY /container-tests  /container-tests
 
 # Install Python dependencies defined in requirements
-RUN  pip3 install -r requirements.txt
