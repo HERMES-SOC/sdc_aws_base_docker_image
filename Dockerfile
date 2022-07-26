@@ -6,6 +6,7 @@ FROM public.ecr.aws/lts/ubuntu:20.04_stable
 # Line >=14 installs cdflib
 RUN apt-get update && \
     apt-get -y upgrade && \
+    apt-get -y install --no-install-recommends -y python3.8 python3-pip python3.8-dev pylint && \
     apt-get -y install git && \
     apt-get -y install make && \
     apt-get -y install curl && \
@@ -19,6 +20,9 @@ RUN apt-get update && \
     make OS=linux ENV=gnu all && \
     make INSTALLDIR=/usr/local/cdf install && \
     cp bin/* /usr/bin/
+
+# add cdf binaries to the path
+ENV PATH="${PATH}:/usr/local/cdf/bin"
 
 # Copy Python requirements.txt file into image (list of common dependencies)
 COPY requirements.txt  .
