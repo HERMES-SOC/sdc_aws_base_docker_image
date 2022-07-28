@@ -19,7 +19,7 @@ RUN apt-get update && \
     cd cdf38_0-dist && \
     make OS=linux ENV=gnu all && \
     make INSTALLDIR=/usr/local/cdf install && \
-    cd .. && \
+    cd ..
 
 # add cdf binaries to the path
 ENV PATH="${PATH}:/usr/local/cdf/bin"
