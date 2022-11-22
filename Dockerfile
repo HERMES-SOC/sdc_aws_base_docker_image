@@ -1,6 +1,23 @@
 # Image: Ubuntu 20.04 Stable, Official Image from Canonical
 FROM public.ecr.aws/lts/ubuntu:20.04_stable
 
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    #
+    # Add sudo support for the non-root user
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# Set the default user
+USER $USERNAME
+
 # Performs updates and installs git, make, curl, python3.8, python3-pip, python3.8-dev and pylint packages
 # Line 13 is required by the spacepy Python package
 # Line >=14 installs cdflib
