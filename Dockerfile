@@ -30,5 +30,8 @@ COPY requirements.txt  .
 # Copy test scripts
 COPY /container-tests  /container-tests
 
+# To fix spacepy dependency issue
+RUN  pip3 install --upgrade --force-reinstall setuptools==59.5.0
+
 # Install Python dependencies defined in requirements
-RUN  pip3 install -r requirements.txt
+RUN  pip install -r requirements.txt
