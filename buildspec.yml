@@ -42,6 +42,12 @@ phases:
         container-structure-test test --image ${IMAGE_NAME}:${ENVIRONMENT}-${GIT_TAG} --config cst_config.yaml
         echo Pushing the Docker image...
         docker push public.ecr.aws/w5r9l1c8/${IMAGE_NAME}:${ENVIRONMENT}-${GIT_TAG}
+        echo Starting aws_processing_lambda CodeBuild project...
+        aws codebuild start-build --project-name build_sdc_aws_processing_lambda \
+        --environment-variables-override name=BUILD_ENVIRONMENT,value=$BUILD_ENVIRONMENT,type=PLAINTEXT \
+        --environment-variables-override name=ENVIRONMENT,value=$ENVIRONMENT,type=PLAINTEXT \
+        --environment-variables-override name=GIT_TAG,value=$GIT_TAG,type=PLAINTEXT \
+        --environment-variables-override name=IMAGE_NAME,value=$IMAGE_NAME,type=PLAINTEXT
       
   post_build:
     commands:
