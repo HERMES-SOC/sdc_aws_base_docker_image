@@ -1,30 +1,49 @@
 version: 0.2
 
+env:
+  variables:
+    ENVIRONMENT: "dev"
+    IMAGE_NAME: "dev-swsoc-docker-lambda-base"
+
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w5r9l1c8
-      
+      - |
+        echo Logging in to Amazon ECR...
+        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w5r9l1c8
+        if git describe --tags --exact-match > /dev/null 2>&1; then
+          echo "This is a tag push event"
+          ENVIRONMENT="prod"
+          IMAGE_NAME="swsoc-docker-lambda-base"
+          GIT_TAG=`git describe --tags --exact-match`
+        elif [[ "${ENVIRONMENT}" == "PRODUCTION" ]]; then
+          echo "This is a production environment"
+          ENVIRONMENT="prod"
+          IMAGE_NAME="swsoc-docker-lambda-base"
+          GIT_TAG=`date -u +"%Y%m%d%H%M%S"`
+        else
+          echo "This is a development environment"
+          GIT_TAG=`date -u +"%Y%m%d%H%M%S"`
+        fi
+
   build:
     commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...          
-      - docker build -t swsoc-docker-lambda-base:latest .
-      - docker tag swsoc-docker-lambda-base:latest public.ecr.aws/w5r9l1c8/swsoc-docker-lambda-base:latest
-      - curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && sudo mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
-      - apt-get update && apt-get install -y python3-pip
-      - apt-get install make graphviz -y
-      - pip3 install -r requirements.txt
-      - make html
-      - echo CST Testing
-      - container-structure-test test --image swsoc-docker-lambda-base:latest --config cst_config.yaml
-      - echo Pushing the Docker image...
-      - docker push public.ecr.aws/w5r9l1c8/swsoc-docker-lambda-base:latest
-
+      - |
+        echo Build started on `date`
+        echo Building the Docker image...          
+        docker build -t ${IMAGE_NAME}:${ENVIRONMENT}-${GIT_TAG} .
+        docker tag ${IMAGE_NAME}:${ENVIRONMENT}-${GIT_TAG} public.ecr.aws/w5r9l1c8/${IMAGE_NAME}:${ENVIRONMENT}-${GIT_TAG}
+        curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && sudo mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
+        sudo yum install python3-pip -y
+        sudo yum install make graphviz -y
+        pip3 install -r requirements.txt
+        make html
+        echo CST Testing
+        container-structure-test test --image ${IMAGE_NAME}:${ENVIRONMENT}-${GIT_TAG} --config cst_config.yaml
+        echo Pushing the Docker image...
+        docker push public.ecr.aws/w5r9l1c8/${IMAGE_NAME}:${ENVIRONMENT}-${GIT_TAG}
       
   post_build:
     commands:
       - echo Build completed on `date`
-
  
