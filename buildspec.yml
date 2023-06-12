@@ -16,7 +16,7 @@ phases:
           ENVIRONMENT="prod"
           IMAGE_NAME="swsoc-docker-lambda-base"
           GIT_TAG=`git describe --tags --exact-match`
-        elif [[ "${CODEBUILD_ENVIRONMENT}" == "PRODUCTION" ]]; then
+        elif [[ "${BUILD_ENVIRONMENT}" == "PRODUCTION" ]]; then
           echo "This is a production environment"
           ENVIRONMENT="prod"
           IMAGE_NAME="swsoc-docker-lambda-base"
