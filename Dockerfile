@@ -30,6 +30,9 @@ COPY requirements.txt  .
 # Copy test scripts
 COPY /container-tests  /container-tests
 
+# Upgrade pip
+RUN  pip3 install --upgrade pip
+
 # To fix spacepy dependency issue
 RUN  pip3 install --upgrade --force-reinstall setuptools==59.5.0 setuptools_scm==6.3.2
 
