@@ -12,11 +12,11 @@ RUN apt-get update && \
     apt-get -y install curl && \
     apt-get -y install wget && \
     apt-get -y install gfortran && \
-    wget https://spdf.gsfc.nasa.gov/pub/software/cdf/dist/cdf38_0/cdf38_0-dist-cdf.tar.gz && \
-    tar zxvpf cdf38_0-dist-cdf.tar.gz && rm cdf38_0-dist-cdf.tar.gz && \
+    wget https://spdf.gsfc.nasa.gov/pub/software/cdf/dist/cdf39_0/linux/cdf39_0-dist-cdf.tar.gz && \
+    tar zxvpf cdf39_0-dist-cdf.tar.gz && rm cdf39_0-dist-cdf.tar.gz && \
     apt-get -y install libncurses5-dev && \
     apt-get -y install gcc && \
-    cd cdf38_0-dist && \
+    cd cdf39_0-dist && \
     make OS=linux ENV=gnu all && \
     make INSTALLDIR=/usr/local/cdf install && \
     cd ..

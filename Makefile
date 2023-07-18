@@ -1,4 +1,4 @@
-# Minimal makefile for Sphinx documentation
+# Make file for the sphinx documentation and docker image
 #
 
 # You can set these variables from the command line, and also
@@ -18,3 +18,15 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+# Build the docker image for the base image
+docker-build:
+	docker build -t docker-base -f Dockerfile .
+
+# Run the docker image for the base image as vscode user
+docker-run:
+	docker run -it --rm -v $(PWD):/home/vscode/workspace -u vscode docker-base
+
+# Clean up the docker image for the base image
+docker-clean:
+	docker rmi docker-base

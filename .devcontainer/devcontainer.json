@@ -1,11 +1,13 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.183.0/containers/python-3
 {
-	"name": "Lambda Base Image Docker File",
+	"name": "Ubuntu 20.04 Python 3",
+	// Repo where this image's Dockerfile is maintained: https://github.com/HERMES-SOC/docker-lambda-base
 	"build": {
 		"dockerfile": "../Dockerfile",
 		"context": ".."
 	},
+	//"initializeCommand": "",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"python.pythonPath": "/usr/bin/python3",
@@ -23,18 +25,16 @@
 		"python.linting.lintOnSave": true,
 		"python.linting.flake8Enabled": true,
 		"editor.formatOnSave": true,
-		"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-		"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
-		"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+		"python.linting.banditPath": "/usr/local/bin/bandit",
+		"python.linting.flake8Path": "/usr/local/bin/flake8",
+		"python.linting.mypyPath": "/usr/local/bin/mypy",
 		"python.linting.pycodestylePath": "/usr/local/bin/pycodestyle",
 		"python.linting.pydocstylePath": "/usr/local/bin/pydocstyle",
 		"python.linting.pylintPath": "/usr/bin/pylint",
+		"terminal.integrated.defaultProfile.linux": "bash (login)",
 		"terminal.integrated.profiles.linux": {
 			"bash (login)": {
-				"path": "/bin/bash",
-				"args": [
-					""
-				]
+				"path": "bash"
 			}
 		}
 	},
@@ -42,12 +42,18 @@
 	"extensions": [
 		"ms-python.python",
 		"ms-python.vscode-pylance",
-		"marklarah.pre-commit-vscode"
+		"marklarah.pre-commit-vscode",
+		"ms-toolsai.jupyter",
+		"ms-toolsai.jupyter-renderers",
+		"ms-toolsai.jupyter-keymap",
+		"jithurjacob.nbpreviewer"
 	],
+	// Mount to a volume if you'd like to persist data to your disk
+	// "mounts": ["source=<add your /path/on/host here>, target=/workspaces/hermes_core, type=bind"],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	//"postCreateCommand": "bash -i -c 'pip3 install --user .[all]'",
+	// Hermes_core package is uninstalled from the container image after it is created to avoid circular import errors during development 
+	// "postCreateCommand": "",
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"
 }
