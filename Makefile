@@ -30,3 +30,11 @@ docker-run:
 # Clean up the docker image for the base image
 docker-clean:
 	docker rmi docker-base
+
+# Install Container Structure Testing
+cst-install:
+	curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && sudo mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
+
+# Run CST Container tests
+cst-test:
+	container-structure-test test --image docker-base --config cst_config.yaml
