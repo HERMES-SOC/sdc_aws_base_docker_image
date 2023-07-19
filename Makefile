@@ -27,6 +27,11 @@ docker-build:
 docker-run:
 	docker run -it --rm -v $(PWD):/home/vscode/workspace -u vscode docker-base
 
+# Run as root
+docker-run-root:
+	docker run -d --rm -v $(PWD):/home/vscode/workspace docker-base
+	docker exec -it $(shell docker ps -q) bash
+
 # Clean up the docker image for the base image
 docker-clean:
 	docker rmi docker-base
@@ -37,4 +42,5 @@ cst-install:
 
 # Run CST Container tests
 cst-test:
+	make docker-build
 	container-structure-test test --image docker-base --config cst_config.yaml
