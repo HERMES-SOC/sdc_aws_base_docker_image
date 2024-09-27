@@ -16,7 +16,7 @@ sphinx-copybutton==0.5.2 # for documentation
 sphinx-changelog==1.3.0 # for changelog in documentation
 sphinx_rtd_theme==2.0.0 # for documentation
 ipython==8.12.2 # for easier debugging
-swxsoc @ git+https://github.com/swxsoc/swxsoc.git@main # for interfacing with the SWxSOC API
+swxsoc @ git+https://github.com/swxsoc/swxsoc.git # for interfacing with the SWxSOC API
 hermes_core @ git+https://github.com/HERMES-SOC/hermes_core.git # for hermes instrument packages
 boto3==1.34.34 # for aws sdk
 awslambdaric==2.0.4 # for use with interfacing with aws lambda
