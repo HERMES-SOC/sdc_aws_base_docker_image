@@ -135,9 +135,9 @@ phases:
               name=PUBLIC_ECR_REPO,value="${VERSIONED_IMAGE}",type=PLAINTEXT
         }
 
-        start_lambda_build build_sdc_aws_sorting_lambda
-        start_lambda_build build_sdc_aws_processing_lambda
-        start_lambda_build build_sdc_aws_artifact_lambda
+        start_lambda_build build_hermes_sdc_aws_sorting_lambda
+        start_lambda_build build_hermes_sdc_aws_processing_lambda
+        start_lambda_build build_hermes_sdc_aws_artifact_lambda
 
   post_build:
     commands:
