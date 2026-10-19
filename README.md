@@ -11,7 +11,7 @@ This repository is to define the image to be used for the development environmen
 
 This container is built and pushed to the public repo ECR automatically by AWS Codebuild.
 
-### **Base Image**: Ubuntu 22.04 ([public.ecr.aws/lts/ubuntu:22.04_stable](https://gallery.ecr.aws/lts/ubuntu))
+### **Base Image**: Ubuntu 24.04 ([public.ecr.aws/lts/ubuntu:24.04_stable](https://gallery.ecr.aws/lts/ubuntu))
 
 ### **ECR Repo:** Docker Lambda Base Image ([public.ecr.aws/w5r9l1c8/swsoc-docker-lambda-base:latest](https://gallery.ecr.aws/w5r9l1c8/swsoc-docker-lambda-base))
 
@@ -34,32 +34,15 @@ equals its own current `origin/main` before publishing.
 - git
 - wget
 - unzip
-- python3.8
+- python3.12
 - python3-pip
 - pylint
 
 ## Included Python Packages
-- numpy 
-- astropy 
-- sunpy 
-- flake8 (For code style)
-- black (For code style)
-- pytest (For testing)
-- pytest-astropy(For testing)
-- pytest-cov (For testing)
-- pre-commit
-- sphinx (For documentation)
-- sphinx-automodapi (For documentation)
-- sphinx-changelog (For documentation)
-- ipython (For easier debugging)
 - hermes core (For instrument packages)
-- boto3 (For AWS SDK)
 - awslambdaric (For use with interfacing with AWS Lambda)
-- matplotlib
-- scipy
-- spacepy (For CDF file support)
-- ipykernel (For Jupyter notebook)
 - ccsdspy (For parsing CCSDS binary files)
+- swxsoc (for CDF File Read/Write)
 
 ### **Tests:**
 Checks whether the container contains the specified OS and Python requirements using the Container Structure Test ([CST testing suite](https://github.com/GoogleContainerTools/container-structure-test)). 
@@ -71,7 +54,7 @@ To make a change to this container image, please `fork` this repo, make the requ
 If you experience any issues in your development environment (`.devcontainer` environment on VSCode) when pulling this image from ECR, ensure you have the latest build by rebuilding your container to pull from latest.
 
 ## Dockerfile Details
-This Docker image is built from the official Canonical Ubuntu 22.04 image. It updates the system and installs necessary packages such as git, unzip, python3.8, python3-pip, and pylint. 
+This Docker image is built from the official Canonical Ubuntu 24.04 image. It updates the system and installs necessary packages such as git, unzip, python3.12, python3-pip, and pylint. 
 
 This Dockerfile also includes a process to download pre-built CDF binaries for data format support and copies a Python requirements.txt file into the image to be used for installing Python dependencies. 
 
